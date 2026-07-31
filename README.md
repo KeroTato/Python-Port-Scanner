@@ -23,27 +23,6 @@ It scans a target IP address, identifies open ports, and attempts to detect the 
 ## 🚀 How to Run
 
 python port_scanner.py
-## 📋 Example
-
-==============================
-Simple Port Scanner V3
-==============================
-
-Enter Target IP: 192.168.1.1
-Enter Start Port: 1
-Enter End Port: 100
-
-==============================
-Scan Finished
-Target : 192.168.1.1
-==============================
-Port    : 22
-Service : ssh
-------------------------------
-Port    : 80
-Service : http
-------------------------------
-Total Open Ports : 2
 ## 📌 Status
 
 🚧 This project is under development.
