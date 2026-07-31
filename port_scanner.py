@@ -20,9 +20,33 @@ def scan_ports(ip, start_port, end_port):
         
         try:
             s.connect((ip, port))
-            open_ports.append(port)
-        except:
+            
+            try:
+                service = socket.getservbyport(port)
+            except:
+                service = "Unknown"
+            
+            try:
+                banner = s.recv(1024).decode()
+            except:
+                banner = "No Banner Found"
+            
+            port_info = {
+                "port": port,
+                "service": service,
+                "banner": banner
+            }
+            open_ports.append(port_info)
+            
+        except socket.timeout:
             pass
+            
+        except ConnectionRefusedError:
+            pass
+        
+        except Exception as e:
+            print(f"[ERROR] {port} -> {e}")
+            
         s.close()
     return open_ports
     
@@ -33,19 +57,18 @@ def show_results(ip, open_ports):
     print(f"Target --> {ip}")
     print("=" * 30)
     
-    print("Open Ports:")
+    print("Open Ports:\n")
     for port in open_ports:
         
-        try:
-            service = socket.getservbyport(port)
-        except:
-            service = "Unkown"
-        print(f"Port    : {port}")
-        print(f"Service : {service}")
+        print(f"Port   : {port['port']}")
+        print(f"Service: {port['service']}")
+        print(f"Banner : {port['banner']}")
         print("-" * 30)
-    print(f"Total Open Ports : {len(open_ports)}")      
-    
+    print(f"Total Open Ports : {len(open_ports)}")
 scanner_banner()
+
 ip, start_port, end_port = get_target()
+
 open_ports = scan_ports(ip, start_port, end_port)
+
 show_results(ip, open_ports)
