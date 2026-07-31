@@ -2,7 +2,7 @@ import socket
 
 def scanner_banner():
     print("=" * 30)
-    print("Simple Port Scanner v2")
+    print("Simple Port Scanner")
     print("=" * 30)
 
 def get_target():
